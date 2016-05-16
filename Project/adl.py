@@ -7,15 +7,22 @@ This script plots the distribution of non-activity for each elder for varying ti
 """
 
 import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 
 #function to read csv
-def read(filename='/Users/AMOS/Documents/PROJECTS/Internship/Workspace/DATA/SensorReading_2015-10_S001.csv'):
-	# s_id,date,door_contact_as,living_room_as,bedroom_as,bed_as,bathroom_as,kitchen_as 
-	#csv = np.genfromtxt(filename,dtype=str, delimiter=',',skip_header = 1, usecols=(0,1,2,3,4,5,6,7))
-	#realized that using a dataframe would be better.
+def read(filename='../Workspace/DATA/SensorReading_2015-10_S001.csv'):
 	df = pd.read_csv(filename, delimiter=',', usecols=[x for x in range(0,8)],parse_dates=[1])
 	return df
 
 df = read()
-print(df.values)
+column_names = list(df.columns.values)
+print(column_names)
+print(len(df.index))
+another_df = df.ix[(df['door_contact_as'] == 'No') & (df['living_room_as'] == 'No') & (df['bedroom_as'] == 'No') & (df['bed_as'] == 'No') & (df['bathroom_as'] == 'No') & (df['kitchen_as'] == 'No')]
+
+print(len(another_df.index))
+another_df.to_csv('test.csv')
+
+
+
