@@ -21,7 +21,7 @@ def dbscan(points, eps, min_points):
 	Min_points	:	Minimum number of points to be a dense region.
 	"""
 	# Initialize cluster
-	cluster = {}
+	cluster = {} #is this the appropriate data type?
 	cluster_index = 0
 
 	# 'Visited' matrix
@@ -43,51 +43,67 @@ def dbscan(points, eps, min_points):
 	# Pre-compute distance from every point to every other point
 	# O(N^2)
 	dist = points_rad[None,:] - points_rad[:,None]
-	# print(dist)
+
 
 	#Assign shortest distances
 	dist[((dist > pi) & (dist <= (2*pi)))] = dist[((dist > pi) & (dist <= (2*pi)))] -(2*pi)
 	dist[((dist > (-2*pi)) & (dist <= (-1*pi)))] = dist[((dist > (-2*pi)) & (dist <= (-1*pi)))] + (2*pi) 
 	dist = abs(dist)
-	# print(dist)
+
 
 	# DBSCAN Algorithm
 	for i in range(len(points_rad)):
 		if visited[i] == 1:
 			continue
 
+		# Mark as visited
 		visited[i] = 1
 		neighbors = get_neighbors(i, dist, eps_rad)
 
 		if (sum(neighbors) < min_points):
 			noise[i] = 1
 		else:
-			cluster_index = cluster_index + 1
+			cluster_index += 1
 			new_cluster, neighbors_visited = expand_cluster(i, neighbors, 
 				visited, dist, eps_rad, min_points, cluster)
-			cluster[cluster_index, 1] = new_cluster
+			cluster[cluster_index] = new_cluster
 			visited = neighbors_visited
+
+	print("Size of Noise: ", str(len(noise)))
+	return cluster
 
 
 def get_neighbors(index, dist, eps):
+	"""
+	This method binarizes the array of 'neighbors' belonging
+	to the point at	 the current index
+	"""
 	neighbors = dist[index]
+	# Change those values that outside epsilon to -1
 	neighbors[(neighbors > eps)] = -1
+	# Change those values that not -1 to 0
 	neighbors[(neighbors != -1)] = 1
+	# Change values that are == -1 to 0
 	neighbors[(neighbors == -1)] = 0
 	return neighbors # EXPECTED: 1-D array
 
 def exists_in_cluster(index, cluster):
-	exists = false
-	for i in len(cluster):
-		j = cluster[i]
-		if sum(j == index) > 0:
-			exists = true
-			return exists
+	exists = False
+	for i in cluster.keys():
+		if index in cluster[i]: #fix this behaviour; fixed
+			exists = True
+			break
+
 	return exists # EXPECTED bool val
 
 def expand_cluster(index, neighbors, visited, dist, eps, min_points, cluster):
-	new_cluster = index
-	k = np.nonzero(neighbors)[0]
+	
+	new_cluster = []
+	# print('index: ', index , neighbors)
+	# print(dist)
+	new_cluster.append(index)
+	k = (np.nonzero(neighbors)[0]).tolist()
+
 	j = 0 # Python arrays start from 0, matlab starts from 1
 
 	while j < len(k):
@@ -96,8 +112,14 @@ def expand_cluster(index, neighbors, visited, dist, eps, min_points, cluster):
 			visited[neighbor_index] = 1
 			next_neighbors = get_neighbors(neighbor_index, dist, eps)
 			if sum(next_neighbors) >= min_points:
-				pass
-	return
+				k = k + (np.nonzero(next_neighbors)[0]).tolist() #fix this behaviour too; fixed
+		if ( (exists_in_cluster(neighbor_index,cluster) == False) & (neighbor_index not in new_cluster)): #fixed
+			new_cluster.append(neighbor_index)
+		j += 1
+
+	neighbors_visited = visited
+	return [int(x) for x in new_cluster], neighbors_visited
 
 def convert_to_radian(x):
 	return ((x / (24*60)) * 2 * pi)
+
