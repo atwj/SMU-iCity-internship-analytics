@@ -69,7 +69,7 @@ def dbscan(points, eps, min_points):
 			cluster[cluster_index] = new_cluster
 			visited = neighbors_visited
 
-	print("Size of Noise: ", str(len(noise)))
+	print("Size of Noise: ", str(len(np.nonzero(noise))))
 	return cluster
 
 

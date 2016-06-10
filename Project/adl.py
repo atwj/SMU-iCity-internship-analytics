@@ -10,8 +10,8 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import time
-import dbscan as db
-# from sklearn.cluster import DBSCAN
+import math
+from sklearn.cluster import DBSCAN
 ############################################################################################
 
 time_now = time.time()
@@ -77,7 +77,6 @@ print(new_df.head(), '\n')
 # new_df['timestamp'] = new_df['timestamp'].apply(lambda x: pd.to_datetime(x, ))
 
 #convert timestamp to unix time, in float
-# new_df['timestamp'] = new_df['timestamp'].astype(np.int64)
 print(new_df.head())
 print()
 print(new_df.describe())
@@ -88,8 +87,5 @@ print(new_df.describe())
 print()
 # print(db, '\n')
 # print(len(set(db.labels_)) - (1 if -1 in db.labels_ else 0))
-test = range(10)
-print(db.dbscan(test, 1.0, 10))
-
 
 print("Elasped Time: ", round(time.time() - time_now, 3), "seconds")
