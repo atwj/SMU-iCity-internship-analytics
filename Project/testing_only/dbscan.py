@@ -76,7 +76,7 @@ def dbscan(points, eps, min_points):
 def get_neighbors(index, dist, eps):
 	"""
 	This method binarizes the array of 'neighbors' belonging
-	to the point at	 the current index
+	to the point at	the current index
 	"""
 	neighbors = dist[index]
 	# Change those values that outside epsilon to -1
@@ -88,6 +88,9 @@ def get_neighbors(index, dist, eps):
 	return neighbors # EXPECTED: 1-D array
 
 def exists_in_cluster(index, cluster):
+	"""
+	This method checks whether the index is in the cluster
+	"""
 	exists = False
 	for i in cluster.keys():
 		if index in cluster[i]: #fix this behaviour; fixed
@@ -97,15 +100,18 @@ def exists_in_cluster(index, cluster):
 	return exists # EXPECTED bool val
 
 def expand_cluster(index, neighbors, visited, dist, eps, min_points, cluster):
-	
+	"""
+	This method searches the index's neighbours neighbours and adds them
+	to the cluster.
+	"""
 	new_cluster = []
-	# print('index: ', index , neighbors)
-	# print(dist)
 	new_cluster.append(index)
 	k = (np.nonzero(neighbors)[0]).tolist()
 
 	j = 0 # Python arrays start from 0, matlab starts from 1
 
+	#Loop through each neighbor index, and checks its neighbours before adding it into
+	#k, the array that the loop is looping through, and subsequently adding it to the cluster.
 	while j < len(k):
 		neighbor_index = k[j]
 		if visited[neighbor_index] != 1:
@@ -121,5 +127,10 @@ def expand_cluster(index, neighbors, visited, dist, eps, min_points, cluster):
 	return [int(x) for x in new_cluster], neighbors_visited
 
 def convert_to_radian(x):
+	"""
+	This is a helper method that takes a time value in 
+	total minutes 'x' and return its value over total minutes in a day (1440) 
+	expressed in radian. 
+	"""
 	return ((x / (24*60)) * 2 * pi)
 
