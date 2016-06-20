@@ -93,7 +93,7 @@ def get_x_from_df(series):
     return X
 
 # Returns output from sklearn DBSCAN method
-def dbscan(eps, min_pts, metric, X):
+def dbscan(eps, min_pts, X, metric='precomputed'):
     db = DBSCAN(eps, min_pts, metric)
     db.fit(X)
     return db.labels_, db.components_, db.core_sample_indices_
@@ -141,6 +141,7 @@ df_sleep = get_df_sleep_intervals(df)
 # print(df_sleep.columns.values)
 # print(df_sleep.head())
 
+# X is a distance matrix.
 # Set 'X1' as sleep_start timings
 X1 = get_x_from_df(df_sleep['sleep_start'])
 
@@ -148,10 +149,27 @@ X1 = get_x_from_df(df_sleep['sleep_start'])
 X2 = get_x_from_df(df_sleep['sleep_end'])
 
 # TODO
-# 1. After implementing method to calculate EPS
+# 1. Implement method to calculate EPS
 # 2. Get output for both X1 and X2
 # 3. Construct cluster plot. Polar plot
-# X1_label, X1_components, X1_csi = dbscan()
+
+# Arbitrary eps and min_pts value:
+eps = convert_to_radian(15)
+min_pts = 10
+
+X1_label, X1_components, X1_csi = dbscan(eps, min_pts, X1)
+X2_label, X2_components, X2_csi = dbscan(eps, min_pts, X2)
+
+# Sanity check here:
+print('Sanity check.......')
+print('Checking.........................')
+print('start sleep time cluster: ')
+# - 1 if -1 exist in labels because -1 is used to denote noise
+X1_no_clusters = len(set(X1_label)) - (1 if -1 in X1_label else 0)
+print('Number of clusters for start sleep time: ', X1_no_clusters )
+print('end sleep time cluster: ')
+X2_no_clusters = len(set(X2_label)) - (1 if -1 in X2_label else 0)
+print('Number of clusters for end sleep time: ', X2_no_clusters )
 
 
 # trad = np.vectorize(convert_to_radian)
