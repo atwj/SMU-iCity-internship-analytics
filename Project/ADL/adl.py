@@ -104,6 +104,14 @@ def dbscan(eps, min_pts, X, metric='precomputed'):
 def calculate_eps():
     pass
 
+def configure_polar_plot(axes):
+    xticklabels = [str(x) for x in range (0,24)]
+    axes.set_xticks(np.linspace(0,23,24,endpoint=True, dtype=np.int32) / 24 * (2 * np.pi))
+    axes.set_xticklabels(xticklabels)
+    axes.set_theta_zero_location('N')
+    axes.set_theta_direction(-1)
+    return axes
+
 ############################################################################################
 
 # Start timer:
@@ -163,13 +171,24 @@ X2_label, X2_components, X2_csi = dbscan(eps, min_pts, X2)
 # Sanity check here:
 print('Sanity check.......')
 print('Checking.........................')
-print('start sleep time cluster: ')
+print('start_sleep_time cluster: ')
+
 # - 1 if -1 exist in labels because -1 is used to denote noise
 X1_no_clusters = len(set(X1_label)) - (1 if -1 in X1_label else 0)
 print('Number of clusters for start sleep time: ', X1_no_clusters )
-print('end sleep time cluster: ')
+# What does this do? 
+core_samples_mask = np.zeros_like(X1_label, dtype=bool)
+core_samples_mask[X1_csi] = True
+print(core_samples_mask)
+print('end_sleep_time cluster: ')
+# - 1 if -1 exist in labels because -1 is used to denote noise
 X2_no_clusters = len(set(X2_label)) - (1 if -1 in X2_label else 0)
 print('Number of clusters for end sleep time: ', X2_no_clusters )
+
+#########################PLOTTING##########################
+# fig = plt.figure(figsize=(8,8))
+# ax1 = configure_polar_plot(fig.add_subplot(111, projection='polar'))
+# plt.show()
 
 
 print("Elasped Time: ", round(time.time() - time_now, 3), "seconds")
