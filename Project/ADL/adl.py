@@ -90,7 +90,7 @@ def get_x_from_df(series):
     X[((X > (-2*pi)) & (X <= (-1*pi)))] = X[((X > (-2*pi)) & (X <= (-1*pi)))] + (2*pi) 
     X = abs(X)
 
-    return X
+    return X,input_rad
 
 # Returns output from sklearn DBSCAN method
 def dbscan(eps, min_pts, X, metric='precomputed'):
@@ -111,6 +111,23 @@ def configure_polar_plot(axes):
     axes.set_theta_zero_location('N')
     axes.set_theta_direction(-1)
     return axes
+
+def show_plot(labels):
+    unique_labels = set(labels)
+    colors = plt.cm.Spectral(np.linspace(0,1, len(unique_labels)))
+    print('Total unique labels: ', unique_labels)
+    print('Total colors', colors)
+    
+    print('class_members_mask ', class_members_mask)
+    # print('yoohoo')
+    # for k, col in zip(unique_labels, colors):
+    #     if k == -1:
+    #         # Black used for noise
+    #         col = 'k'
+    #     # What does this do sia..
+    #     class_member_mask = (labels == k)
+    #     print(class_member_mask)
+        
 
 ############################################################################################
 
@@ -151,10 +168,10 @@ df_sleep = get_df_sleep_intervals(df)
 
 # X is a distance matrix.
 # Set 'X1' as sleep_start timings
-X1 = get_x_from_df(df_sleep['sleep_start'])
+X1,X1_rad_series = get_x_from_df(df_sleep['sleep_start'])
 
 # Set 'X2' as sleep_end timings
-X2 = get_x_from_df(df_sleep['sleep_end'])
+X2,X2_rad_series = get_x_from_df(df_sleep['sleep_end'])
 
 # TODO
 # 1. Implement method to calculate EPS
@@ -177,15 +194,21 @@ print('start_sleep_time cluster: ')
 X1_no_clusters = len(set(X1_label)) - (1 if -1 in X1_label else 0)
 print('Number of clusters for start sleep time: ', X1_no_clusters )
 # What does this do? 
-core_samples_mask = np.zeros_like(X1_label, dtype=bool)
-core_samples_mask[X1_csi] = True
-print(core_samples_mask)
+core_samples_mask_X1 = np.zeros_like(X1_label, dtype=bool)
+core_samples_mask_X1[X1_csi] = True
+print(X1)
+print(X1_csi)
+# core_samples_mask_X2 = np.zeros_like(X2_label, dtype=bool)
+# core_samples_mask_X2[X2_csi] = True
+
+print(core_samples_mask_X1)
 print('end_sleep_time cluster: ')
 # - 1 if -1 exist in labels because -1 is used to denote noise
 X2_no_clusters = len(set(X2_label)) - (1 if -1 in X2_label else 0)
 print('Number of clusters for end sleep time: ', X2_no_clusters )
 
 #########################PLOTTING##########################
+show_plot(X1_label)
 # fig = plt.figure(figsize=(8,8))
 # ax1 = configure_polar_plot(fig.add_subplot(111, projection='polar'))
 # plt.show()
