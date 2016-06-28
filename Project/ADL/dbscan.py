@@ -9,7 +9,10 @@ from matplotlib.backends.backend_pdf import PdfPages
 ###########################################IMPRORTS#########################################
 
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> master
 # To return value in mins / total mins in one day
 def to_mins(x):
     x = pd.Timestamp(x)
