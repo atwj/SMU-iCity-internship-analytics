@@ -9,7 +9,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 import time
-from math import pi
 from sklearn.cluster import DBSCAN
 ###########################################IMPRORTS#########################################
 
@@ -25,7 +24,7 @@ def to_mins(x):
 # Helper method to convert values to radian
 def convert_to_radian(x):
 
-    return ((x / (24*60)) * 2 * pi)
+    return ((x / (24*60)) * 2 * np.pi)
 
 # Get all the sleep intervals based on bedroom only data
 def get_df_sleep_intervals(df):
@@ -74,7 +73,7 @@ def get_df_sleep_intervals(df):
 
 # Returns a distance matrix (a numpy array)
 def get_x_from_df(series):
-    print(series.head())
+    # print(series.head())
     
     # Vectorizing to_mins and to_radian functions
     tmin = np.vectorize(to_mins)
