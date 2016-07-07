@@ -14,15 +14,20 @@ from sklearn.cluster import DBSCAN
 ###########################################IMPRORTS#########################################
 
 
-# To return value in mins / total mins in one day
+# To return value in mins / total mins in a day
 def to_mins(x):
-    x = pd.Timestamp(x)
-    year = x.year
-    month =  x.month
-    day = x.day
-    return (x.value - pd.Timestamp(str(year)+'-'+str(month)+'-'+str(day)).value) / (60 * (10**9))
+	x = pd.Timestamp(x)
+	year = x.year
+	month =  x.month
+	day = x.day
+	return (x.value - pd.Timestamp(str(year)+'-'+str(month)+'-'+str(day)).value) / (60 * (10**9))
 
-# Helper method to convert values to radian
+# Helper method to covert radian back to minutes
+def radian_to_mins(x):
+
+	return (x / 2 / np.pi) * (24 * 60)
+
+# Helper method to convert values in minutes / total minutes in a day to radian
 def convert_to_radian(x):
 
     return ((x / (24*60)) * 2 * np.pi)
