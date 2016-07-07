@@ -2,6 +2,7 @@
 AUTHOR  : TAN WEI JIE AMOS
 EMAIL   : amos.tan.2014@sis.smu.edu.sg
 DATE    : 
+TITLE   :
 """
 
 ###########################################IMPRORTS#########################################
@@ -50,7 +51,7 @@ def get_df_sleep_intervals(df):
             sleep_start = None
             sleep_end = None
             
-    # already reached end of file, sleep was spilled over from last day to next month
+    # already reached end of file, sleep was snp.pilled over from last day to next month
     if not sleep_start is None:        
         sleep_end = df['date'].iloc[-1]
         sleep_duration = sleep_end - sleep_start
@@ -74,7 +75,6 @@ def get_df_sleep_intervals(df):
 # Returns a distance matrix (a numpy array)
 def get_x_from_df(series):
     # print(series.head())
-    
     # Vectorizing to_mins and to_radian functions
     tmin = np.vectorize(to_mins)
     trad = np.vectorize(convert_to_radian)
@@ -85,9 +85,9 @@ def get_x_from_df(series):
     # Convert time to rad points   
     X = input_rad[None,:] - input_rad[:,None]
 
-    # Assign 'shortest distance to each point
-    X[((X > pi) & (X <= (2*pi)))] = X[((X > pi) & (X <= (2*pi)))] -(2*pi)
-    X[((X > (-2*pi)) & (X <= (-1*pi)))] = X[((X > (-2*pi)) & (X <= (-1*pi)))] + (2*pi) 
+    # Assign shortest distance to each point
+    X[(( X > np.pi ) & (X <= (2*np.pi)))] = X[((X > np.pi) & (X <= (2*np.pi)))] -(2*np.pi)
+    X[((X > (-2*np.pi)) & (X <= (-1*np.pi)))] = X[((X > (-2*np.pi)) & (X <= (-1*np.pi)))] + (2*np.pi) 
     X = abs(X)
 
-    return X,input_rad
+    return X, input_rad
