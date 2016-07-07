@@ -2,6 +2,7 @@
 AUTHOR	: TAN WEI JIE AMOS
 EMAIL	: amos.tan.2014@sis.smu.edu.sg
 DATE    : 
+TITLE   : adl.py
 """
 
 ###########################################IMPRORTS#########################################
@@ -100,13 +101,7 @@ X2_label, X2_components, X2_csi = dbscan(eps, min_pts, X2)
 # print('start sleep time cluster: ')
 # - 1 if -1 exist in labels because -1 is used to denote noise
 X1_no_clusters = len(set(X1_label)) - (1 if -1 in X1_label else 0)
-# print(X1_label)
-# print(X1_components)
-# print(X1_csi)
-# core_samples_mask_X1 = np.zeros_like(X1_label, dtype=bool)
-# print(core_samples_mask_X1)
-# core_samples_mask_X1[X1_csi] = True
-# print(core_samples_mask_X1)
+
 print('Number of clusters for start sleep time: ', X1_no_clusters )
 # print('end sleep time cluster: ')
 X2_no_clusters = len(set(X2_label)) - (1 if -1 in X2_label else 0)
@@ -117,8 +112,7 @@ print('Number of clusters for end sleep time: ', X2_no_clusters )
 fig = plt.figure(figsize=(6,6))
 ax1 = configure_polar_plot(fig.add_subplot(111, projection='polar'))
 ax1.set_title(file_name)
-# ax1.plot(X1_rad_series, [1 for x in X1_rad_series], 'mo')
-# ax1.plot(X2_rad_series, [0.8 for x in X2_rad_series], 'y*')
+
 plot_clusters(X1_label, X1_rad_series, ax1, 0.8)
 plot_clusters(X2_label, X2_rad_series, ax1, 0.6)
 plt.show()
