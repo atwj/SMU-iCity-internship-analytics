@@ -29,4 +29,21 @@ def knee_calculate_eps_minPts(distance_matrix):
 	#TODO: Use vector projection to select knee point.
 	eps = bin_edges[1]
 
+	count_minPts = []
+	for distance in distance_matrix:
+		count_minPts.append(len(np.where(distance <= eps)[0]))
+
+	# Generate histogram for minpts
+	hist_mp, bind_edges_mp = np.histogram(count_minPts, density=False)
+
+	# Arbitrarily select the max bin_edge value.
+	# TODO: Find a better way to select the minpts value
+	minPts = np.median(bind_edges_mp)
+
+	# Return eps and minPts
+	return eps, minPts
+
+
+
+
 
