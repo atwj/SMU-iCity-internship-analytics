@@ -96,3 +96,11 @@ def get_x_from_df(series):
     X = abs(X)
 
     return X, input_rad
+
+# Extract clusters
+
+
+# Extract centroids
+def get_centroids(cluster):
+	return np.mean(cluster)
+
