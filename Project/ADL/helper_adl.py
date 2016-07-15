@@ -98,9 +98,12 @@ def get_x_from_df(series):
     return X, input_rad
 
 # Extract clusters
-
-
-# Extract centroids
-def get_centroids(cluster):
-	return np.mean(cluster)
-
+def extract_clusters(labels, data):
+	cluster_dict_ = {}
+	clusters = set(labels)
+	for k in clusters:
+		if k != -1:
+			indices_of_k_ = np.where(labels == k)
+			cluster_dict_[k] = data.take(indices_of_k_)
+	return cluster_dict_
+		
