@@ -22,10 +22,14 @@ def to_mins(x):
 	day = x.day
 	return (x.value - pd.Timestamp(str(year)+'-'+str(month)+'-'+str(day)).value) / (60 * (10**9))
 
+# To return total mins returned as hh:mm format
+def format_mins(mins):
+	return '{:02d}:{:02d}'.format(*divmod(mins,60))
+
 # Helper method to covert radian back to minutes
 def radian_to_mins(x):
-
-	return (x / 2 / np.pi) * (24 * 60)
+  
+	return int(round((x / 2 / np.pi) * (24 * 60))) 
 
 # Helper method to convert values in minutes / total minutes in a day to radian
 def convert_to_radian(x):
@@ -106,4 +110,5 @@ def extract_clusters(labels, data):
 			indices_of_k_ = np.where(labels == k)
 			cluster_dict_[k] = data.take(indices_of_k_)
 	return cluster_dict_
+
 		
