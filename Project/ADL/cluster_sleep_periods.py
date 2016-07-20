@@ -26,7 +26,7 @@ file_dir = 'sleep'
 # indexes = [str(x) for x in range(1,10)]
 index = '9'
 
-file_name = ''.join([file_dir,'/','sleep-aggregate_2016-01_S001.csv'])
+# file_name = ''.join([file_dir,'/','sleep-aggregate_2016-01_S001.csv'])
 # print file name
 # print('File name: ', file_name)
 
@@ -98,10 +98,11 @@ def return_clusters(file_name):
     output_dict['sd'] = np.array(sd)
     output_dict['var'] = np.array(var)
     output_dict['centroid'] = np.array(centroid)
+    output_dict['start_end'] = start_end
 
     return output_dict
 
-print(return_clusters(file_name))
+# print(return_clusters(file_name))
 ##################PLOTTING####################
 # TODO: CLUSTER
 # fig = plt.figure(figsize=(6,6))
