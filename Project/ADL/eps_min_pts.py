@@ -17,7 +17,6 @@ from sklearn.cluster import DBSCAN
 def knee_calculate_eps_minPts(distance_matrix):
 	# Flatten matrix
 	X = distance_matrix.flatten()
-	print(X)
 	
 	# Get non-zeros
 	X_non_zeros_ = X.nonzero()
@@ -42,7 +41,6 @@ def knee_calculate_eps_minPts(distance_matrix):
 
 	# Return eps and minPts
 	return eps, minPts
-
 
 
 
