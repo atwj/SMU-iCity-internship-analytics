@@ -22,7 +22,7 @@ def sleep_to_cluster_aggregate(path,output_path):
 			output_dict['month'] = month
 			df = pd.DataFrame(output_dict)
 			print(df.columns)
-			df = df[['id','month','cluster','centroid','sd','var','start_end']]
+			df = df[['id','month','cluster','centroid','std','variance','start_end']]
 			df.to_csv(output_path+'cluster_'+f)
 		except ValueError:
 			file_count -= 1
@@ -30,4 +30,4 @@ def sleep_to_cluster_aggregate(path,output_path):
 	print('Files parsed successfully ', file_count)
 	print('Files with errors: ', files_with_error)
 
-sleep_to_cluster_aggregate('sleep/sleep_agg/', 'sleep/sleep_agg_results/')
+

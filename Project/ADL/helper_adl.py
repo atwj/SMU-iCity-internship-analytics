@@ -83,7 +83,7 @@ def get_df_sleep_intervals(df):
 
 # Returns a distance matrix (a numpy array)
 def get_x_from_df(series):
-    # print(series.head())
+    
     # Vectorizing to_mins and to_radian functions
     tmin = np.vectorize(to_mins)
     trad = np.vectorize(convert_to_radian)
@@ -105,10 +105,11 @@ def get_x_from_df(series):
 def extract_clusters(labels, data):
 	cluster_dict_ = {}
 	clusters = set(labels)
+	print(data.shape)
 	for k in clusters:
 		if k != -1:
-			indices_of_k_ = np.where(labels == k)
-			cluster_dict_[k] = data.take(indices_of_k_)
+			indices_of_k_, = np.where(labels == k)
+			cluster_dict_[k] = data.take(indices_of_k_,axis=1).reshape(2,len(indices_of_k_))
 	return cluster_dict_
 
 		
