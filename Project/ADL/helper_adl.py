@@ -105,7 +105,7 @@ def get_x_from_df(series):
 def extract_clusters(labels, data):
 	cluster_dict_ = {}
 	clusters = set(labels)
-	print(data.shape)
+	# print(data.shape)
 	for k in clusters:
 		if k != -1:
 			indices_of_k_, = np.where(labels == k)

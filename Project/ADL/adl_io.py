@@ -8,11 +8,17 @@ import pandas as pd
 import numpy as np
 import cluster_sleep_periods as csp
 
-def sleep_to_cluster_aggregate(path,output_path):
+def sleep_to_cluster_aggregate(path='sleep/sleep_agg/'
+	,output_path='sleep/sleep_agg_results/'):
 
 	files = [f for f in listdir(path) if isfile(join(path, f))]
 	file_count = len(files)
 	files_with_error = []
+
+	# hacky code to help populate dictionary to be use in 'Sleep trends notebook'
+	# comment out when not needed
+	# frame_list to contain all the dataframes for concatenation
+	frame_list = []
 	for f in files:
 		month = f[16:23]
 		id = f[24:28]
@@ -21,13 +27,16 @@ def sleep_to_cluster_aggregate(path,output_path):
 			output_dict['id'] = id
 			output_dict['month'] = month
 			df = pd.DataFrame(output_dict)
-			print(df.columns)
+			# print(df.columns)
 			df = df[['id','month','cluster','centroid','std','variance','start_end']]
-			df.to_csv(output_path+'cluster_'+f)
+			# Adding dataframes to frame_list
+			frame_list.append(df)
+			# df.to_csv(output_path+'cluster_'+f)
 		except ValueError:
 			file_count -= 1
 			files_with_error.append(f)
 	print('Files parsed successfully ', file_count)
-	print('Files with errors: ', files_with_error)
+	print('Files with errors: ', len(files_with_error))
+	return frame_list
 
 
