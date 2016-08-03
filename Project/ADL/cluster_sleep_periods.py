@@ -1,3 +1,10 @@
+"""
+AUTHOR  : TAN WEI JIE AMOS
+EMAIL   : amos.tan.2014@sis.smu.edu.sg
+DATE    : 03-08-2016
+TITLE   : cluster_sleep_periods.py
+"""
+
 ###########################################IMPRORTS#########################################
 import pandas as pd
 import numpy as np

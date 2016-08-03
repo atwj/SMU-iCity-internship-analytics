@@ -1,5 +1,8 @@
 """
-file writer
+AUTHOR	: TAN WEI JIE AMOS
+EMAIL	: amos.tan.2014@sis.smu.edu.sg
+DATE    : 03-08-2016
+TITLE   : adl_io.py
 """
 
 from os import listdir
@@ -10,6 +13,10 @@ import cluster_sleep_periods as csp
 
 def sleep_to_cluster_aggregate(path='sleep/sleep_agg/'
 	,output_path='sleep/sleep_agg_results/'):
+	"""
+	This method writes cluster results to csv from sleep-aggregate csv files. 
+	e.g (sleep-aggregate_2015-07_S001.csv)
+	"""
 
 	files = [f for f in listdir(path) if isfile(join(path, f))]
 	file_count = len(files)

@@ -1,8 +1,8 @@
 """
 AUTHOR  : TAN WEI JIE AMOS
 EMAIL   : amos.tan.2014@sis.smu.edu.sg
-DATE    : 
-TITLE   :
+DATE    : 03-08-2016
+TITLE   : helper_adl.py
 """
 
 ###########################################IMPRORTS#########################################

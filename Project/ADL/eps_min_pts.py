@@ -1,6 +1,8 @@
 """
-Calculate eps & minPts
-
+AUTHOR  : TAN WEI JIE AMOS
+EMAIL   : amos.tan.2014@sis.smu.edu.sg
+DATE    : 03-08-2016
+TITLE   : eps_min_pts.py
 """
 ################ IMPORTS ##################
 import pandas as pd
@@ -10,8 +12,11 @@ import time
 from sklearn.cluster import DBSCAN
 ################ IMPORTS ##################
 
-# TODO:
-# 1. Significance of similarity in the data????????????????
+"""
+Possible improvements:
+1. Explore more robust means of identifying the knee-points
+2. (1) Maybe can explore vector projection
+"""
 
 # Using the 'knee' method of choosing an eps and min pts
 def knee_calculate_eps_minPts(distance_matrix):
@@ -25,7 +30,6 @@ def knee_calculate_eps_minPts(distance_matrix):
 	# Generate histogram
 	hist, bin_edges = np.histogram(X_array, density=False)
 	# Arbitrarily select the knee, occasionally it falls in the 2nd or 3rd bin.
-	#TODO: Use vector projection to select knee point.
 	eps = bin_edges[1]
 
 	count_minPts = []
